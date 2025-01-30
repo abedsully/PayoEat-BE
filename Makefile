@@ -1,4 +1,4 @@
 build:
-	mvn clean package
+	mvn clean install -DskipTests
 	docker-compose down
 	docker-compose up --build

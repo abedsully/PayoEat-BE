@@ -4,11 +4,11 @@ import com.example.PayoEat.exceptions.AlreadyExistException;
 import com.example.PayoEat.model.Restaurant;
 import com.example.PayoEat.repository.RestaurantRepository;
 import com.example.PayoEat.request.AddRestaurantRequest;
-import com.example.PayoEat.request.UpdateRestaurantRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,21 +38,12 @@ public class RestaurantService implements IRestaurantService {
 
     @Override
     public Restaurant getRestaurantById(Long id) {
-        return null;
-    }
-
-    @Override
-    public Restaurant updateRestaurant(UpdateRestaurantRequest request, Long restaurantId) {
-        return null;
+        return restaurantRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + id));
     }
 
     @Override
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
-    }
-
-    @Override
-    public void deleteRestaurantById(Long id) {
-
     }
 }

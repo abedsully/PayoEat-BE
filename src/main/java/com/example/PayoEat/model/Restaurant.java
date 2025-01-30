@@ -1,5 +1,6 @@
 package com.example.PayoEat.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +18,16 @@ import lombok.Setter;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Unique identifier of the restaurant")
     private Long id;
+
+    @Schema(description = "Name of the restaurant")
     private String name;
+
+    @Schema(description = "Rating of the restaurant")
     private Double rating;
+
+    @Schema(description = "Description of the restaurant")
     private String description;
 
     public Restaurant(String name, Double rating, String description) {

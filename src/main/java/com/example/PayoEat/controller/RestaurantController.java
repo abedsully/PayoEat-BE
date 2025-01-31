@@ -34,7 +34,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/add-restaurant")
-    @Operation(summary = "Add Restaurant", description = "Add Restaurant by Request")
+    @Operation(summary = "Add Restaurant", description = "Add restaurant by request")
     public ResponseEntity<ApiResponse> addRestaurant(@RequestBody AddRestaurantRequest request) {
         try {
             Restaurant newRestaurant = restaurantService.addRestaurant(request);
@@ -52,6 +52,21 @@ public class RestaurantController {
             return ResponseEntity.ok(new ApiResponse("Found", restaurants));
         } catch (Exception e) {
             return ResponseEntity.status(CONFLICT).body(new ApiResponse("Error:", INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @GetMapping("/get-restaurant-by-name")
+    @Operation(summary = "Get Restaurants By Name", description = "Getting list of restaurants based on their name")
+    public ResponseEntity<ApiResponse> getRestaurantByName(@RequestParam String name) {
+        try {
+            List<Restaurant> restaurants = restaurantService.findRestaurantByName(name);
+
+            if (restaurants.isEmpty()) {
+                return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No restaurants found with name: " + name, null));
+            }
+            return ResponseEntity.ok(new ApiResponse("Found", restaurants));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
         }
     }
 }

@@ -9,4 +9,5 @@ public interface IRestaurantService {
     Restaurant addRestaurant(AddRestaurantRequest request);
     Restaurant getRestaurantById(Long id);
     List<Restaurant> getAllRestaurants();
+    List<Restaurant> findRestaurantByName(String name);
 }

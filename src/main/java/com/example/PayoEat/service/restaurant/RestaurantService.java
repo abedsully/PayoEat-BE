@@ -46,4 +46,9 @@ public class RestaurantService implements IRestaurantService {
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
+
+    @Override
+    public List<Restaurant> findRestaurantByName(String name) {
+        return restaurantRepository.findByNameContainingIgnoreCase(name);
+    }
 }

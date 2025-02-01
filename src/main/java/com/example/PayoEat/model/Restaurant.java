@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -29,6 +31,15 @@ public class Restaurant {
 
     @Schema(description = "Description of the restaurant")
     private String description;
+
+    @Schema(description = "Date in which the restaurant is created at")
+    private LocalDateTime createdAt;
+
+    @Schema(description = "The latest date the restaurant is updated at")
+    private LocalDateTime updatedAt;
+
+    @Schema(description = "Status of restaurant")
+    private Boolean isActive;
 
     public Restaurant(String name, Double rating, String description) {
         this.name = name;

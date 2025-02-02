@@ -4,14 +4,13 @@ import com.example.PayoEat.exceptions.AlreadyExistException;
 import com.example.PayoEat.exceptions.NotFoundException;
 import com.example.PayoEat.model.Restaurant;
 import com.example.PayoEat.repository.RestaurantRepository;
-import com.example.PayoEat.request.AddRestaurantRequest;
-import com.example.PayoEat.request.UpdateRestaurantRequest;
-import dto.RestaurantDto;
+import com.example.PayoEat.request.restaurant.AddRestaurantRequest;
+import com.example.PayoEat.request.restaurant.UpdateRestaurantRequest;
+import com.example.PayoEat.dto.RestaurantDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

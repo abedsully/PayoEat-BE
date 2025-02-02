@@ -1,4 +1,4 @@
-package dto;
+package com.example.PayoEat.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.example.PayoEat.request;
+package com.example.PayoEat.request.restaurant;
 
 import lombok.Data;
 

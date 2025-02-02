@@ -1,11 +1,11 @@
 package com.example.PayoEat.controller;
 
 import com.example.PayoEat.model.Restaurant;
-import com.example.PayoEat.request.AddRestaurantRequest;
-import com.example.PayoEat.request.UpdateRestaurantRequest;
+import com.example.PayoEat.request.restaurant.AddRestaurantRequest;
+import com.example.PayoEat.request.restaurant.UpdateRestaurantRequest;
 import com.example.PayoEat.response.ApiResponse;
 import com.example.PayoEat.service.restaurant.IRestaurantService;
-import dto.RestaurantDto;
+import com.example.PayoEat.dto.RestaurantDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

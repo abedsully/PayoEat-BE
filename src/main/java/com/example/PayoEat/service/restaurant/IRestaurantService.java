@@ -1,9 +1,9 @@
 package com.example.PayoEat.service.restaurant;
 
 import com.example.PayoEat.model.Restaurant;
-import com.example.PayoEat.request.AddRestaurantRequest;
-import com.example.PayoEat.request.UpdateRestaurantRequest;
-import dto.RestaurantDto;
+import com.example.PayoEat.request.restaurant.AddRestaurantRequest;
+import com.example.PayoEat.request.restaurant.UpdateRestaurantRequest;
+import com.example.PayoEat.dto.RestaurantDto;
 
 import java.util.List;
 

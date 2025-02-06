@@ -11,4 +11,5 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     boolean existsByName(String name);
     Optional <Restaurant> findByIdAndIsActiveTrue(Long id);
     List<Restaurant> findByIsActiveTrue();
+    Restaurant findByName(String name);
 }

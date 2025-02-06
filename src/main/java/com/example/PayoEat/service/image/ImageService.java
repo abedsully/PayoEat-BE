@@ -1,0 +1,43 @@
+package com.example.PayoEat.service.image;
+
+import com.example.PayoEat.model.Image;
+import com.example.PayoEat.model.Menu;
+import com.example.PayoEat.repository.ImageRepository;
+import com.example.PayoEat.service.menu.IMenuService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.UUID;
+
+@AllArgsConstructor
+@Service
+public class ImageService implements IImageService{
+    private final ImageRepository imageRepository;
+
+    @Override
+    public Image saveImage(MultipartFile file, String menuCode) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("File cannot be empty");
+        }
+
+        try {
+            Image image = new Image();
+            image.setFileName(file.getOriginalFilename());
+            image.setFileType(file.getContentType());
+            image.setImage(file.getBytes());
+
+            Image savedImage = imageRepository.save(image);
+            savedImage.setDownloadUrl("/menu/download/" + savedImage.getId());
+            return imageRepository.save(savedImage);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to process image: " + e.getMessage());
+        }
+    }
+
+    public Image getImageById(UUID imageId) {
+        return imageRepository.findById(imageId)
+                .orElseThrow(() -> new RuntimeException("Image not found with id: " + imageId));
+    }
+
+}

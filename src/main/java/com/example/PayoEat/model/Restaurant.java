@@ -1,5 +1,6 @@
 package com.example.PayoEat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,12 +41,9 @@ public class Restaurant {
     @Schema(description = "Status of restaurant")
     private Boolean isActive;
 
-    @Schema(description = "Images of the restaurant")
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images;
-
     @Schema(description = "List of menu in restaurant")
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
     private List<Menu> menus;
 
     public Restaurant(String name, Double rating, String description) {

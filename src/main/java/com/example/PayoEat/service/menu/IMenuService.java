@@ -6,6 +6,7 @@ import com.example.PayoEat.request.menu.AddMenuRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface IMenuService {
     Menu getMenuById(String menuId);
@@ -13,4 +14,5 @@ public interface IMenuService {
     MenuDto convertToDto(Menu menu);
     List<MenuDto> getConvertedMenus(List<Menu> menus);
     List<Menu> getMenusByRestaurantId(Long restaurantId);
+    void deleteMenu(String menuCode);
 }

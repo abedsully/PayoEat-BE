@@ -74,4 +74,15 @@ public class MenuController {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("Error: " + e.getMessage(), null));
         }
     }
+
+    @DeleteMapping("/delete-menu/{menuCode}")
+    @Operation(summary = "Delete a menu by Menu Code", description = "API to delete restaurant menu by providing its code")
+    public ResponseEntity<ApiResponse> deleteMenu(@PathVariable String menuCode) {
+        try {
+            menuService.deleteMenu(menuCode);
+            return ResponseEntity.ok(new ApiResponse("Menu deleted successfully", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
 }

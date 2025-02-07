@@ -58,6 +58,22 @@ public class MenuService implements IMenuService{
         return menuRepository.findByRestaurantId(restaurantId);
     }
 
+    @Override
+    public void deleteMenu(String menuCode) {
+        menuRepository.findByMenuCodeAndIsActiveTrue(menuCode)
+                .map(currentMenu -> {
+                    deleteExistingMenu(currentMenu);
+                    return menuRepository.save(currentMenu);
+                })
+                .orElseThrow(() -> new NotFoundException("Menu not found"));
+
+    }
+
+    private void deleteExistingMenu(Menu existingMenu) {
+        existingMenu.setUpdatedAt(LocalDateTime.now());
+        existingMenu.setIsActive(false);
+    }
+
     private Menu createMenu(AddMenuRequest request, MultipartFile menuImage) {
         Restaurant restaurant = restaurantRepository.findByIdAndIsActiveTrue(request.getRestaurantId())
                 .orElseThrow(() -> new NotFoundException("Restaurant not found with id: " + request.getRestaurantId()));

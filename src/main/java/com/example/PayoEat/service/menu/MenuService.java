@@ -52,11 +52,14 @@ public class MenuService implements IMenuService{
 
     @Override
     public List<Menu> getMenusByRestaurantId(Long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findByIdAndIsActiveTrue(restaurantId)
+                .orElseThrow(() -> new NotFoundException("Restaurant not found with id: " + restaurantId));
+
         return menuRepository.findByRestaurantId(restaurantId);
     }
 
     private Menu createMenu(AddMenuRequest request, MultipartFile menuImage) {
-        Restaurant restaurant = restaurantRepository.findById(request.getRestaurantId())
+        Restaurant restaurant = restaurantRepository.findByIdAndIsActiveTrue(request.getRestaurantId())
                 .orElseThrow(() -> new NotFoundException("Restaurant not found with id: " + request.getRestaurantId()));
 
         String randomSuffix = UUID.randomUUID().toString().substring(0, 5);

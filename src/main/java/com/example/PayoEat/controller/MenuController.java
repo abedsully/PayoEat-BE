@@ -48,7 +48,7 @@ public class MenuController {
         }
     }
 
-    @GetMapping("/menu/image/{imageId}")
+    @GetMapping("/image/{imageId}")
     @Operation(summary = "Show Menu Image by ID", description = "API to display menu image by providing the image ID")
     public ResponseEntity<ByteArrayResource> showMenuImage(@PathVariable("imageId") UUID imageId) {
         try {

@@ -3,6 +3,7 @@ package com.example.PayoEat.service.menu;
 import com.example.PayoEat.dto.MenuDto;
 import com.example.PayoEat.model.Menu;
 import com.example.PayoEat.request.menu.AddMenuRequest;
+import com.example.PayoEat.request.menu.UpdateMenuRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface IMenuService {
     List<MenuDto> getConvertedMenus(List<Menu> menus);
     List<Menu> getMenusByRestaurantId(Long restaurantId);
     void deleteMenu(String menuCode);
+    Menu updateMenu(String menuCode, UpdateMenuRequest request, MultipartFile menuImage);
 }

@@ -39,6 +39,12 @@ public class RestaurantService implements IRestaurantService {
     }
 
     private Restaurant updateExistingRestaurant(Restaurant existingRestaurant, UpdateRestaurantRequest request) {
+        if ((request.getName() == null || request.getName().isEmpty()) &&
+                (request.getDescription() == null || request.getDescription().isEmpty()) &&
+                request.getRating() == null) {
+            throw new IllegalArgumentException("No valid fields provided to update the restaurant.");
+        }
+
         if (request.getName() != null && !request.getName().isEmpty()) {
             existingRestaurant.setName(request.getName());
         }

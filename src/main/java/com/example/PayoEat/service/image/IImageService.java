@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface IImageService {
     Image saveImage(MultipartFile file, String menuCode);
     Image getImageById(UUID imageId);
+    Image updateImage(MultipartFile file, UUID id);
 }

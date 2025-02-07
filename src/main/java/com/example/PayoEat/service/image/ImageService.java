@@ -1,5 +1,6 @@
 package com.example.PayoEat.service.image;
 
+import com.example.PayoEat.exceptions.NotFoundException;
 import com.example.PayoEat.model.Image;
 import com.example.PayoEat.model.Menu;
 import com.example.PayoEat.repository.ImageRepository;
@@ -38,6 +39,27 @@ public class ImageService implements IImageService{
     public Image getImageById(UUID imageId) {
         return imageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("Image not found with id: " + imageId));
+    }
+
+    @Override
+    public Image updateImage(MultipartFile file, UUID id) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("File can not be empty");
+        }
+
+        try {
+            Image image = imageRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Image not found with id: " + id));
+
+            image.setFileName(file.getOriginalFilename());
+            image.setFileType(file.getContentType());
+            image.setImage(file.getBytes());
+            image.setDownloadUrl("/menu/download/" + image.getId());
+
+            return imageRepository.save(image);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update image: " + e.getMessage());
+        }
     }
 
 }

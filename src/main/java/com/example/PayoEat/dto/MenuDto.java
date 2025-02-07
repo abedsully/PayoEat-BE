@@ -10,6 +10,6 @@ public class MenuDto {
     private String menuName;
     private String menuDetail;
     private Double menuPrice;
-    private Restaurant restaurant;
+    private RestaurantDto restaurant;
     private ImageDto image;
 }

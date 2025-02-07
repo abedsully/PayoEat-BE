@@ -9,6 +9,7 @@ import com.example.PayoEat.model.Restaurant;
 import com.example.PayoEat.repository.MenuRepository;
 import com.example.PayoEat.repository.RestaurantRepository;
 import com.example.PayoEat.request.menu.AddMenuRequest;
+import com.example.PayoEat.request.menu.UpdateMenuRequest;
 import com.example.PayoEat.service.image.ImageService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -72,6 +73,46 @@ public class MenuService implements IMenuService{
     private void deleteExistingMenu(Menu existingMenu) {
         existingMenu.setUpdatedAt(LocalDateTime.now());
         existingMenu.setIsActive(false);
+    }
+
+
+    @Override
+    public Menu updateMenu(String menuCode, UpdateMenuRequest request, MultipartFile menuImage) {
+       return menuRepository.findByMenuCodeAndIsActiveTrue(menuCode)
+                .map(existingMenu -> updateExistingMenu(existingMenu, request, menuImage))
+                .map(menuRepository::save)
+                .orElseThrow(() -> new NotFoundException("Menu not found with code: " + menuCode));
+
+    }
+
+    private Menu updateExistingMenu(Menu existingMenu, UpdateMenuRequest request, MultipartFile menuImage) {
+
+        if ((request.getMenuName() == null || request.getMenuName().isEmpty()) &&
+                request.getMenuPrice() == null &&
+                (request.getMenuDetail() == null || request.getMenuDetail().isEmpty()) &&
+                menuImage == null) {
+            throw new IllegalArgumentException("No valid fields provided to update the menu.");
+        }
+
+        if (request.getMenuName() != null && !request.getMenuName().isEmpty()) {
+            existingMenu.setMenuName(request.getMenuName());
+        }
+
+        if (request.getMenuPrice() != null) {
+            existingMenu.setMenuPrice(request.getMenuPrice());
+        }
+
+        if (request.getMenuDetail() != null && !request.getMenuDetail().isEmpty()) {
+            existingMenu.setMenuDetail(request.getMenuDetail());
+        }
+
+        if (menuImage != null) {
+            imageService.updateImage(menuImage, existingMenu.getMenuImage().getId());
+        }
+
+        existingMenu.setUpdatedAt(LocalDateTime.now());
+
+        return existingMenu;
     }
 
     private Menu createMenu(AddMenuRequest request, MultipartFile menuImage) {

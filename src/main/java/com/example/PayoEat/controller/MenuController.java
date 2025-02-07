@@ -4,6 +4,7 @@ import com.example.PayoEat.dto.MenuDto;
 import com.example.PayoEat.model.Image;
 import com.example.PayoEat.model.Menu;
 import com.example.PayoEat.request.menu.AddMenuRequest;
+import com.example.PayoEat.request.menu.UpdateMenuRequest;
 import com.example.PayoEat.response.ApiResponse;
 import com.example.PayoEat.service.image.IImageService;
 import com.example.PayoEat.service.menu.IMenuService;
@@ -81,6 +82,24 @@ public class MenuController {
         try {
             menuService.deleteMenu(menuCode);
             return ResponseEntity.ok(new ApiResponse("Menu deleted successfully", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @PutMapping(value = "/update-menu/{menuCode}", consumes = {"multipart/form-data"})
+    @Operation(summary = "Update a menu by Menu Code", description = "API to update restaurant menu by providing its code")
+    public ResponseEntity<ApiResponse> updateMenu(
+            @PathVariable String menuCode,
+            @RequestParam String menuName,
+            @RequestParam String menuDetail,
+            @RequestParam double menuPrice,
+            @RequestParam MultipartFile menuImage) {
+        try {
+            UpdateMenuRequest request = new UpdateMenuRequest(menuName, menuDetail, menuPrice);
+            Menu menu = menuService.updateMenu(menuCode, request, menuImage);
+            MenuDto convertedMenu = menuService.convertToDto(menu);
+            return ResponseEntity.ok(new ApiResponse("Menu updated successfully", null));
         } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
